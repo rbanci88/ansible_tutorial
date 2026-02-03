@@ -7,19 +7,23 @@
   - name: update repository index
     dnf:
       update_cache: yes
+    when: ansible_distribution == "RedHat"
 
   - name: install apache httpd package
     dnf:
       name: httpd
       state: latest
+    when: ansible_distribution == "RedHat"
    
   - name: ensure Apache httpd package is installed
-    ansible.builtin.dnf: # Use dnf for RHEL 8+
+    dnf: # Use dnf for RHEL 8+
       name: httpd
       state: present
+    when: ansible_distribution == "RedHat"
 
   - name: ensure Apache httpd service is running and enabled 
-    ansible.builtin.service:
+    service:
       name: httpd
       state: started
       enabled: true
+    when: ansible_distribution == "RedHat"
