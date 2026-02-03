@@ -1,0 +1,24 @@
+---
+
+- hosts: all
+  become: true
+  tasks: 
+
+  - name: update repository index
+    dnf:
+      update_cache: yes
+
+  - name: install apache httpd package
+    dnf:
+      name: httpd
+   
+  - name: ensure Apache httpd package is installed
+    ansible.builtin.dnf: # Use dnf for RHEL 8+
+      name: httpd
+      state: present
+
+  - name: ensure Apache httpd service is running and enabled 
+    ansible.builtin.service:
+      name: httpd
+      state: started
+      enabled: true
