@@ -11,6 +11,7 @@
   - name: install apache httpd package
     dnf:
       name: httpd
+      state: latest
    
   - name: ensure Apache httpd package is installed
     ansible.builtin.dnf: # Use dnf for RHEL 8+

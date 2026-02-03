@@ -4,7 +4,7 @@
   gather_facts: no
   tasks: 
     - name: Remove httpd package
-      ansible.builtin.dnf:
+      dnf:
         name: httpd
         state: absent
         autoremove: true
