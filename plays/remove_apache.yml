@@ -1,12 +1,10 @@
 ---
-
 - hosts: all
   become: true
+  gather_facts: no
   tasks: 
-
-  - name: Stop the httpd service
-    ansible.builtin.service:
-            name: httpd
-            state: stopped
-            enabled: false
-    ignore_errors: true       
+    - name: Remove httpd package
+      ansible.builtin.dnf:
+        name: httpd
+        state: absent
+        autoremove: true
