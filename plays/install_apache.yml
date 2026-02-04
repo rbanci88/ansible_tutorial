@@ -2,18 +2,30 @@
 
 - hosts: all
   become: true
+  pre_tasks:
+
+  - name: install updates (Rhel)
+    tags: always
+    dnf:
+      update_only: yes
+      update_cache: yes
+    when: ansible_distribution == "RedHat"
+
+- hosts: all
+  become: true
   tasks: 
 
   - name: install apache httpd and php packages for RedHat
+    tags: rhel,apache
     package:
       name:
         - "{{ apache_package }}"
         - "{{ php_package }}"
       state: latest
-      update_cache: yes
     when: ansible_distribution == "RedHat"
    
   - name: ensure Apache httpd and php packages are installed
+    tags: rhel,apache,httpd,php
     package:
       name:
         - "{{ apache_package }}"
@@ -22,6 +34,7 @@
     when: ansible_distribution == "RedHat"
 
   - name: ensure Apache httpd service is running and enabled 
+    tags: rhel,apache,httpd
     service:
       name: "{{ apache_package }}"
       state: started
@@ -29,9 +42,19 @@
     when: ansible_distribution == "RedHat"
 
   - name: ensure Apache php service is running and enabled
+    tags: rhel,apache,php
     service:
       name: "{{ php_package }}"
       state: started
       enabled: true
     when: ansible_distribution == "RedHat"
+
+  - name: copy default html file for site
+    tags: apache,httpd
+    copy:
+      src: default_site.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644
 
