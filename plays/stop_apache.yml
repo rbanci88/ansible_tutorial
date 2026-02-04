@@ -7,7 +7,14 @@
 
   - name: Stop the httpd service
     service:
-            name: httpd
+            name: "{{ apache_package }}"
             state: stopped
             enabled: false
     ignore_errors: true       
+
+  - name: Stop the php-fpm service
+    service:
+            name: "{{ php_package }}"
+            state: stopped
+            enabled: false
+    ignore_errors: true

@@ -1,10 +1,14 @@
 ---
+
 - hosts: all
   become: true
   gather_facts: no
   tasks: 
+
     - name: Remove httpd package
-      dnf:
-        name: httpd
+      package:
+        name:
+          - "{{ apache_package }}"
+          - "{{ php_package }}"
         state: absent
         autoremove: true

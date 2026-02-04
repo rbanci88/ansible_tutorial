@@ -4,26 +4,34 @@
   become: true
   tasks: 
 
-  - name: update repository index
-    dnf:
+  - name: install apache httpd and php packages for RedHat
+    package:
+      name:
+        - "{{ apache_package }}"
+        - "{{ php_package }}"
+      state: latest
       update_cache: yes
     when: ansible_distribution == "RedHat"
-
-  - name: install apache httpd package
-    dnf:
-      name: httpd
-      state: latest
-    when: ansible_distribution == "RedHat"
    
-  - name: ensure Apache httpd package is installed
-    dnf: # Use dnf for RHEL 8+
-      name: httpd
+  - name: ensure Apache httpd and php packages are installed
+    package:
+      name:
+        - "{{ apache_package }}"
+        - "{{ php_package }}"
       state: present
     when: ansible_distribution == "RedHat"
 
   - name: ensure Apache httpd service is running and enabled 
     service:
-      name: httpd
+      name: "{{ apache_package }}"
       state: started
       enabled: true
     when: ansible_distribution == "RedHat"
+
+  - name: ensure Apache php service is running and enabled
+    service:
+      name: "{{ php_package }}"
+      state: started
+      enabled: true
+    when: ansible_distribution == "RedHat"
+
