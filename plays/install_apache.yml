@@ -9,6 +9,7 @@
     dnf:
       update_only: yes
       update_cache: yes
+    changed_when: false
     when: ansible_distribution == "RedHat"
 
 - hosts: all

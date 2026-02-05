@@ -1,0 +1,14 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: install updates (Rhel)
+    tags: always
+    dnf:
+      update_only: yes
+      update_cache: yes
+    changed_when: false
+    when: ansible_distribution == "RedHat"
+
