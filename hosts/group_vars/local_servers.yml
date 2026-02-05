@@ -1,0 +1,4 @@
+# Variables for the 'local_servers' group
+ansible_connection: local 
+apache_package: httpd 
+php_package: php-fpm

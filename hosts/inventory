@@ -1,2 +1,2 @@
 [local_servers]
-localhost ansible_connection=local apache_package=httpd php_package=php-fpm
+localhost
